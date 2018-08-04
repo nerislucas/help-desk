@@ -3,6 +3,7 @@ package br.com.globalpoints.helpdesk.business.entitites;
 import br.com.globalpoints.helpdesk.business.enums.Priority;
 import br.com.globalpoints.helpdesk.business.enums.Status;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,6 +19,14 @@ public class Ticket {
     private Date date;
     private String title;
     private Integer number;
+    private Status status;
+    private Priority priority;
+    @DBRef(lazy = true)
+    private User assignUser;
+    private String description;
+    private String image;
+    @Transient
+    private List<ChangeStatus> changes;
 
     public String getId() {
         return id;
@@ -106,12 +115,4 @@ public class Ticket {
     public void setChanges(List<ChangeStatus> changes) {
         this.changes = changes;
     }
-
-    private Status status;
-    private Priority priority;
-    @DBRef(lazy = true)
-    private User assignUser;
-    private String description;
-    private String image;
-    private List<ChangeStatus> changes;
 }
