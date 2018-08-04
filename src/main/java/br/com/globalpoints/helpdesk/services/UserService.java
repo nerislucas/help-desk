@@ -20,17 +20,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User findByEmail(String email) {
-        return this.userRepository.findByEmail(email);
-    }
-
     public User upsert(User user) {
         return this.userRepository.save(user);
     }
 
     public User findById(String id) {
         Optional<User> user = this.userRepository.findById(id);
-        return user != null ? user.get() : null;
+        return user.orElse(null);
     }
 
     public void delete(String id) {
