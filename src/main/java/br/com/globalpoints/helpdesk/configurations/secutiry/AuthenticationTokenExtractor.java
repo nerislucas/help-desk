@@ -30,7 +30,7 @@ public class AuthenticationTokenExtractor extends GenericFilterBean {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain)
             throws IOException, ServletException {
         String token = extractTokenFromRequest((HttpServletRequest) req);
-        // System.out.println("Token: " + token);
+        System.out.println("Token: " + token);
         if (token != null) {
             Authentication auth = null;
             try {

@@ -38,7 +38,7 @@ public class JwtTokenProvider {
 
     @PostConstruct
     protected void init() {
-        secretKey = Base64.getEncoder().encodeToString("jd329_93@-0/-'03gg".getBytes());
+        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
     public String createToken(AuthenticatedUser user) {
@@ -52,13 +52,16 @@ public class JwtTokenProvider {
         claims.put(CLAIM_CAMPAIGNID, campaignId);
         claims.put(CLAIM_ROLE, profile.getProfile());
         Date now = new Date();
-        return Jwts.builder()
+        var builder = Jwts.builder()
                 .setClaims(claims)
                 .setSubject(name)
                 .setIssuedAt(now)
-                /*.setExpiration(new Date(now.getTime() + validityInMilliseconds))*/
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();
+                .setExpiration(new Date(now.getTime() + validityInMilliseconds))
+                .signWith(SignatureAlgorithm.HS256, secretKey);
+
+
+        return builder.compact();
+
     }
 
     private Claims getJwtBody(String token) {
