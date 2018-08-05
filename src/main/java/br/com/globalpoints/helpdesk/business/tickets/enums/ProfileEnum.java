@@ -1,4 +1,4 @@
-package br.com.globalpoints.helpdesk.business.enums;
+package br.com.globalpoints.helpdesk.business.tickets.enums;
 
 public enum ProfileEnum {
     ADMIN("Admin"),

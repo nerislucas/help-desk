@@ -1,4 +1,4 @@
-package br.com.globalpoints.helpdesk.business.entitites;
+package br.com.globalpoints.helpdesk.business.users.models;
 
 import java.util.Collection;
 import java.util.LinkedList;

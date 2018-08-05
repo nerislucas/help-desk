@@ -1,6 +1,6 @@
 package br.com.globalpoints.helpdesk.configurations.secutiry;
 
-import br.com.globalpoints.helpdesk.business.enums.ProfileEnum;
+import br.com.globalpoints.helpdesk.business.tickets.enums.ProfileEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,7 +23,7 @@ public class WebSecutiryConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable().authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/healthy/ping").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login/authenticate").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/auth/login/").permitAll()
                 .antMatchers("/api/**").authenticated()
                 .and()
                 .addFilterBefore(new AuthenticationTokenExtractor(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

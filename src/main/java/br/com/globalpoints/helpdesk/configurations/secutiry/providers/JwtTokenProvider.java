@@ -1,13 +1,7 @@
 package br.com.globalpoints.helpdesk.configurations.secutiry.providers;
 
-import java.util.Base64;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
-import br.com.globalpoints.helpdesk.business.entitites.UserPrincipal;
-import br.com.globalpoints.helpdesk.business.enums.ProfileEnum;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,7 +13,9 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-import br.com.globalpoints.helpdesk.business.models.AuthenticatedUser;
+import br.com.globalpoints.helpdesk.business.users.models.AuthenticatedUser;
+import br.com.globalpoints.helpdesk.business.users.models.UserPrincipal;
+import br.com.globalpoints.helpdesk.business.tickets.enums.ProfileEnum;
 
 import javax.annotation.PostConstruct;
 
@@ -27,7 +23,7 @@ import javax.annotation.PostConstruct;
 public class JwtTokenProvider {
     private static final String CLAIM_ID = "id";
     private static final String CLAIM_BU = "bu";
-    private static final String CLAIM_CAMPAIGNID = "bu";
+    private static final String CLAIM_CAMPAIGNSIDS = "campaignsIds";
     private static final String CLAIM_ROLE = "role";
 
     @Value("${security.jwt.token.secretKey}")
@@ -42,14 +38,14 @@ public class JwtTokenProvider {
     }
 
     public String createToken(AuthenticatedUser user) {
-        return createTokenFor(user.getId(), user.getBuId(), user.getCampaingId(), user.getName(), user.getProfile());
+        return createTokenFor(user.getId(), user.getBuId(), user.getCampaignIds(), user.getName(), user.getProfile());
     }
 
-    private String createTokenFor(String id, UUID buId, UUID campaignId, String name, ProfileEnum profile) {
+    private String createTokenFor(String id, UUID buId, List<UUID> campaignsIds, String name, ProfileEnum profile) {
         Map<String, Object> claims = new LinkedHashMap<>();
         claims.put(CLAIM_ID, id);
         claims.put(CLAIM_BU, buId);
-        claims.put(CLAIM_CAMPAIGNID, campaignId);
+        claims.put(CLAIM_CAMPAIGNSIDS, campaignsIds);
         claims.put(CLAIM_ROLE, profile.getProfile());
         Date now = new Date();
         var builder = Jwts.builder()

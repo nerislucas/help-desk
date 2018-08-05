@@ -1,15 +1,24 @@
-package br.com.globalpoints.helpdesk.business.models;
+package br.com.globalpoints.helpdesk.business.users.models;
 
-import br.com.globalpoints.helpdesk.business.enums.ProfileEnum;
+import br.com.globalpoints.helpdesk.business.tickets.enums.ProfileEnum;
 
+import java.util.List;
 import java.util.UUID;
 
 public class AuthenticatedUser {
     private String id;
     private UUID buId;
-    private UUID campaingId;
     private String name;
     private ProfileEnum profile;
+    private List<UUID> campaignIds;
+
+    public List<UUID> getCampaignIds() {
+        return campaignIds;
+    }
+
+    public void setCampaignIds(List<UUID> campaignIds) {
+        this.campaignIds = campaignIds;
+    }
 
     public ProfileEnum getProfile() {
         return profile;
@@ -41,13 +50,5 @@ public class AuthenticatedUser {
 
     public void setBuId(UUID buId) {
         this.buId = buId;
-    }
-
-    public UUID getCampaingId() {
-        return campaingId;
-    }
-
-    public void setCampaingId(UUID campaingId) {
-        this.campaingId = campaingId;
     }
 }
