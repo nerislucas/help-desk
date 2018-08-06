@@ -2,11 +2,9 @@ package br.com.globalpoints.helpdesk.controllers;
 
 import javax.inject.Inject;
 
+import br.com.globalpoints.helpdesk.business.users.models.AuthUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.globalpoints.helpdesk.configurations.secutiry.providers.JwtTokenProvider;
 import br.com.globalpoints.helpdesk.services.AuthService;
@@ -23,12 +21,5 @@ public class AuthController {
     @GetMapping("token/verify")
     public String veryToken() {
         return "Error";
-    }
-
-    @PostMapping("login")
-    public Boolean auth(String user, String password) {
-        var authenticatedUser = this.authService.auth(user, password);
-        this.provider.createToken(authenticatedUser);
-        return true;
     }
 }
